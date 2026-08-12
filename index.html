@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0E1320">
+
+<title>Duetale — tax compliance for Nigerians earning abroad</title>
+<meta name="description" content="Know exactly where you stand on Nigerian tax when you earn in foreign currency. Reviewed and signed off by a licensed CITN practitioner.">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://duetale.com">
+<meta property="og:title" content="Duetale — tax compliance for Nigerians earning abroad">
+<meta property="og:description" content="Know exactly where you stand on Nigerian tax when you earn in foreign currency. Reviewed and signed off by a licensed CITN practitioner.">
+<!-- og:image deliberately omitted: no asset exists yet, and a broken image
+     preview in a WhatsApp share is worse than a text-only card. -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Duetale — tax compliance for Nigerians earning abroad">
+<meta name="twitter:description" content="Know exactly where you stand on Nigerian tax when you earn in foreign currency. Reviewed and signed off by a licensed CITN practitioner.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230E1320'/%3E%3Ctext x='16' y='23' font-family='JetBrains Mono,ui-monospace,SF Mono,Menlo,monospace' font-size='22' font-weight='700' fill='%23ECEFF7' text-anchor='middle'%3Ed%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   Duetale — Design System v1
+   Canonical source: ../DESIGN-SYSTEM.md · token mirror: ../tokens.css
+   The :root block below is copied verbatim from §9. It is a MIRROR —
+   if a token changes, change it there first, then here.
+   Inlined because this page ships as a single draggable file.
+   ============================================================ */
+
+:root{
+  --ink:#0E1320; --panel:#161D2E; --panel-2:#1B2438;
+  --line:rgba(255,255,255,0.08); --line-2:rgba(255,255,255,0.14);
+  --text:#ECEFF7; --body:#C5CDDD; --muted:#8B97AE;
+  --cyan:#3FC8D4; --cyan-bright:#5FD3E2; --cyan-deep:#2A9BA6;
+  --cyan-wash:rgba(63,200,212,0.10); --cyan-line:rgba(63,200,212,0.35);
+  --positive:#3FD98F; --caution:#F2B04A; --danger:#F2685A;
+  --radius:3px; --radius-sm:2px;
+  --display:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+
+  --dur-hover:.15s; --dur-state:.3s; --ease:cubic-bezier(.2,.7,.3,1);
+  --wrap:1000px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--body);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* §7: focus is never removed. */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:2px solid var(--cyan-bright);
+  outline-offset:2px;
+}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+
+/* ---------- section header: eyebrow + h2 + 2px rule (§4) ---------- */
+.eyebrow{
+  font-family:var(--display);font-weight:600;font-size:12px;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--cyan);
+  margin:0 0 12px;
+}
+.sec-head{border-bottom:2px solid var(--line-2);padding-bottom:16px;margin-bottom:32px}
+.sec-head h2{
+  font-family:var(--display);font-weight:700;font-size:21px;line-height:1.25;
+  letter-spacing:-0.02em;text-transform:uppercase;color:var(--text);margin:0;
+}
+section{padding:56px 0}
+.lede{max-width:70ch;margin:0 0 32px;font-size:16px;line-height:1.65}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(14,19,32,0.92);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:60px}
+.mark{
+  font-family:var(--display);font-weight:700;font-size:17px;
+  letter-spacing:-0.03em;color:var(--text);text-decoration:none;
+}
+.mark span{color:var(--cyan)}
+/* Single cyan attention-mark per viewport (§1 rule 1) lives on the hero CTA,
+   so this nav link rests in --text and only warms on hover. */
+.nav-link{
+  font-family:var(--display);font-weight:600;font-size:12px;
+  letter-spacing:0.10em;text-transform:uppercase;
+  color:var(--text);text-decoration:none;transition:color var(--dur-hover) var(--ease);
+}
+.nav-link:hover{color:var(--cyan)}
+
+/* ---------- hero ---------- */
+.hero{padding:80px 0 56px}
+.hero h1{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(38px,7vw,68px);line-height:0.98;letter-spacing:-0.035em;
+  color:var(--text);margin:0 0 24px;max-width:16ch;
+}
+.hero h1 .dim{color:var(--muted);display:block}
+.hero-sub{max-width:60ch;font-size:17px;line-height:1.65;margin:0 0 32px}
+
+.btn{
+  display:inline-block;font-family:var(--display);font-weight:600;font-size:12px;
+  letter-spacing:0.09em;text-transform:uppercase;padding:13px 26px;
+  border-radius:var(--radius);text-decoration:none;cursor:pointer;
+  border:1px solid transparent;
+  transition:background var(--dur-hover) var(--ease),border-color var(--dur-hover) var(--ease);
+}
+.btn-primary{background:var(--cyan);color:var(--ink)}
+.btn-primary:hover{background:var(--cyan-bright)}
+.btn-primary:active{background:var(--cyan-deep)}
+.btn-secondary{background:transparent;color:var(--text);border-color:var(--line-2)}
+.btn-secondary:hover{border-color:var(--muted)}
+.cta-row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+
+.deadline{
+  margin-top:44px;padding-top:20px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  font-family:var(--display);font-weight:500;font-size:12px;
+  letter-spacing:0.10em;text-transform:uppercase;color:var(--muted);
+}
+.deadline b{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ---------- positions: three cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:24px;
+}
+.num{
+  font-family:var(--display);font-weight:700;font-size:13px;
+  letter-spacing:0.10em;color:var(--cyan);
+  font-variant-numeric:tabular-nums;display:block;margin-bottom:12px;
+}
+.card h3,.step h3{
+  font-family:var(--display);font-weight:700;font-size:16px;line-height:1.35;
+  letter-spacing:-0.015em;text-transform:uppercase;color:var(--text);margin:0 0 8px;
+}
+.card p{margin:0;font-size:15px}
+.closing{margin:32px 0 0;max-width:70ch}
+
+/* ---------- steps: data rows, not cards ---------- */
+.steps{border-top:1px solid var(--line)}
+.step{
+  display:grid;grid-template-columns:64px 1fr;gap:20px;
+  padding:24px 0;border-bottom:1px solid var(--line);
+}
+.step .num{margin:2px 0 0}
+.step p{margin:0;max-width:68ch}
+
+/* ---------- the bands ---------- */
+.bands{border-top:1px solid var(--line)}
+.band{
+  display:grid;grid-template-columns:minmax(180px,1fr) minmax(120px,2fr) 64px;
+  gap:20px;align-items:center;
+  padding:16px 0;border-bottom:1px solid var(--line);
+}
+.band-range{
+  font-family:var(--display);font-weight:500;font-size:14px;
+  color:var(--body);font-variant-numeric:tabular-nums;
+}
+.band-track{height:10px;background:var(--panel-2);border-radius:var(--radius-sm);overflow:hidden}
+.band-bar{
+  display:block;height:100%;background:var(--cyan);
+  width:var(--w);min-width:4px;   /* 0% still reads as a rung, not a render failure */
+  border-radius:var(--radius-sm);
+}
+.band-rate{
+  font-family:var(--display);font-weight:700;font-size:15px;color:var(--text);
+  font-variant-numeric:tabular-nums;text-align:right;
+}
+.footnote{margin:24px 0 0;font-size:13px;line-height:1.55;color:var(--muted);max-width:74ch}
+
+/* ---------- the doctrine ---------- */
+.doctrine{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:64px 0}
+.doct{padding:32px 0;border-bottom:1px solid var(--line)}
+.doct:last-child{border-bottom:0;padding-bottom:0}
+.doct:first-of-type{padding-top:0}
+.doct h3{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(30px,5.5vw,46px);line-height:1.05;letter-spacing:-0.03em;
+  color:var(--text);margin:0 0 16px;text-transform:uppercase;
+}
+.doct p{margin:0;max-width:68ch;font-size:16px;line-height:1.65}
+
+/* ---------- founding group ---------- */
+.accent{
+  background:var(--panel);border:1px solid var(--line);
+  border-left:2px solid var(--cyan);border-radius:var(--radius);padding:24px;
+}
+.price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.price .fig{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(30px,5.5vw,46px);line-height:1.05;letter-spacing:-0.03em;
+  color:var(--text);font-variant-numeric:tabular-nums;
+}
+.price .per{font-family:var(--display);font-size:13px;color:var(--muted);letter-spacing:0.10em;text-transform:uppercase}
+
+/* House data-row pattern (§4). Labels at 12px, not 10px: §7's "no text
+   below 12px" floor is non-negotiable and overrides the §2 label size. */
+.rows{border-top:1px solid var(--line);margin:0}
+.row{
+  display:grid;grid-template-columns:180px 1fr;gap:20px;
+  padding:14px 0;border-bottom:1px solid var(--line);
+}
+.row dt{
+  font-family:var(--display);font-weight:600;font-size:12px;
+  letter-spacing:0.10em;text-transform:uppercase;color:var(--muted);
+}
+.row dd{margin:0;color:var(--body);max-width:68ch}
+.row dd b{color:var(--text);font-family:var(--display);font-variant-numeric:tabular-nums;font-weight:700}
+.stage{margin:24px 0 24px;max-width:70ch}
+
+/* ---------- form ---------- */
+.form{max-width:520px}
+.field{margin-bottom:20px}
+.field label{
+  display:block;font-family:var(--display);font-weight:600;font-size:12px;
+  letter-spacing:0.10em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;
+}
+.field .opt{color:var(--muted);font-weight:400;letter-spacing:0}
+.field input,.field select{
+  width:100%;background:var(--panel-2);border:1px solid var(--line-2);
+  border-radius:var(--radius);padding:11px 14px;color:var(--text);
+  font-family:var(--sans);font-size:15px;
+  transition:border-color var(--dur-hover) var(--ease);
+}
+.field select{font-family:var(--display);font-size:14px}
+.field input::placeholder{font-family:var(--display);color:var(--muted);font-size:14px}
+.field input:focus,.field select:focus{border-color:var(--cyan)}
+.field input[aria-invalid="true"],.field select[aria-invalid="true"]{border-color:var(--danger)}
+.err{display:none;margin-top:8px;font-size:13px;color:var(--danger)}
+.err.on{display:block}
+.privacy{margin:20px 0 8px;font-size:13px;color:var(--muted);max-width:68ch}
+.fallback{font-size:12px;color:var(--muted)}
+.fallback a{color:var(--muted);text-decoration:underline}
+.fallback a:hover{color:var(--cyan)}
+.success{display:none;background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--positive);border-radius:var(--radius);padding:24px;max-width:520px}
+.success.on{display:block}
+.success h3{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:-0.015em;color:var(--text);margin:0 0 8px;text-transform:uppercase}
+.success p{margin:0;max-width:60ch}
+a.mail{color:var(--cyan);text-decoration:none}
+a.mail:hover{color:var(--cyan-bright);text-decoration:underline}
+
+/* ---------- who ---------- */
+.who p{max-width:70ch;margin:0 0 16px;font-size:16px;line-height:1.65}
+.who strong{color:var(--text);font-weight:600}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:32px 0 44px}
+.foot{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;align-items:start;
+  font-family:var(--display);font-size:13px;color:var(--muted);
+}
+.foot a{color:var(--muted);text-decoration:none}
+.foot a:hover{color:var(--cyan)}
+.foot .r{text-align:right;font-variant-numeric:tabular-nums}
+.legal{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;line-height:1.55;color:var(--muted);max-width:82ch}
+
+/* ---------- responsive: collapse at 820px (§7) ---------- */
+@media (max-width:820px){
+  section{padding:32px 0}
+  .hero{padding:44px 0 32px}
+  .cards{grid-template-columns:1fr}
+  .band{grid-template-columns:1fr 64px;gap:12px}
+  .band-track{display:none}          /* range + rate survive (§5.5) */
+  .row{grid-template-columns:1fr;gap:6px}
+  .step{grid-template-columns:44px 1fr;gap:14px}
+  .foot{grid-template-columns:1fr;gap:16px}
+  .foot .r{text-align:left}
+  .deadline{flex-direction:column;gap:8px}
+}
+@media (max-width:400px){
+  .wrap{padding:0 16px}
+  .cta-row{gap:12px}
+  .btn{width:100%;text-align:center}
+}
+
+/* ---------- §5: always included ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="mark" href="#top">duetale<span>.</span></a>
+    <a class="nav-link" href="#waitlist">Join the waitlist</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Tax compliance for Nigerians earning abroad</p>
+      <h1>You earn in dollars.<span class="dim">Your tax is still Nigerian.</span></h1>
+      <p class="hero-sub">Duetale works out exactly where you stand — reviewed and signed off by a licensed CITN practitioner, not guesswork.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#waitlist">Join the founding group</a>
+        <a class="btn btn-secondary" href="#review">How it works →</a>
+      </div>
+      <p class="deadline">
+        <span>First filing season under the 2025 Tax Acts closes</span>
+        <b>31 March 2027</b>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== POSITIONS ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Where most people are</p>
+        <h2>Three positions</h2>
+      </div>
+      <p class="lede">Almost everyone earning abroad from Nigeria is in one of three positions. None of them is unusual, and none of them is a disaster.</p>
+      <div class="cards">
+        <article class="card">
+          <span class="num">01</span>
+          <h3>Not registered</h3>
+          <p>You've never registered for tax here, and you're not sure whether you were supposed to.</p>
+        </article>
+        <article class="card">
+          <span class="num">02</span>
+          <h3>Registered, not filing</h3>
+          <p>You have a TIN somewhere from a job years ago, and nothing has been filed since.</p>
+        </article>
+        <article class="card">
+          <span class="num">03</span>
+          <h3>Filing, unsure</h3>
+          <p>Something gets filed each year. You couldn't say with confidence whether it's right.</p>
+        </article>
+      </div>
+      <p class="closing">What none of them tell you is what it would actually cost to fix — which is the thing worth knowing before you decide anything.</p>
+    </div>
+  </section>
+
+  <!-- ===================== WHAT YOU GET ===================== -->
+  <section id="review">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">The first thing we're offering</p>
+        <h2>Compliance position review</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="num">01</span>
+          <div>
+            <h3>You send twelve months</h3>
+            <p>Records of what you earned abroad, in whatever shape you have them. Bank statements, invoices, platform exports.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num">02</span>
+          <div>
+            <h3>A licensed practitioner reviews it</h3>
+            <p>A CITN practitioner works through your position against the 2025 Acts — income, residency, reliefs, what applies.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num">03</span>
+          <div>
+            <h3>You get a written position</h3>
+            <p>Where you stand today, what you would owe, what registering properly costs, and what it saves you. In plain language.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== THE BANDS ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Published rates</p>
+        <h2>What Nigeria charges</h2>
+      </div>
+      <p class="lede">These are the personal income tax bands under the 2025 Acts. They apply to your worldwide income as a Nigerian resident, foreign earnings included. Most people we speak to have never seen them laid out.</p>
+
+      <div class="bands">
+        <div class="band">
+          <span class="band-range">₦0 – ₦800,000</span>
+          <span class="band-track"><span class="band-bar" style="--w:0%"></span></span>
+          <span class="band-rate">0%</span>
+        </div>
+        <div class="band">
+          <span class="band-range">₦800,001 – ₦3,000,000</span>
+          <span class="band-track"><span class="band-bar" style="--w:60%;opacity:.52"></span></span>
+          <span class="band-rate">15%</span>
+        </div>
+        <div class="band">
+          <span class="band-range">₦3,000,001 – ₦12,000,000</span>
+          <span class="band-track"><span class="band-bar" style="--w:72%;opacity:.64"></span></span>
+          <span class="band-rate">18%</span>
+        </div>
+        <div class="band">
+          <span class="band-range">₦12,000,001 – ₦25,000,000</span>
+          <span class="band-track"><span class="band-bar" style="--w:84%;opacity:.76"></span></span>
+          <span class="band-rate">21%</span>
+        </div>
+        <div class="band">
+          <span class="band-range">₦25,000,001 – ₦50,000,000</span>
+          <span class="band-track"><span class="band-bar" style="--w:92%;opacity:.88"></span></span>
+          <span class="band-rate">23%</span>
+        </div>
+        <div class="band">
+          <span class="band-range">Above ₦50,000,000</span>
+          <span class="band-track"><span class="band-bar" style="--w:100%;opacity:1"></span></span>
+          <span class="band-rate">25%</span>
+        </div>
+      </div>
+
+      <p class="footnote">Bands apply progressively — each slice of income is taxed at its own rate, not the whole amount at the top rate. Reliefs and allowances change the final figure. This is published information, not advice on your situation.</p>
+    </div>
+  </section>
+
+  <!-- ===================== THE DOCTRINE ===================== -->
+  <section class="doctrine">
+    <div class="wrap">
+      <p class="eyebrow">How this works, structurally</p>
+      <div class="doct">
+        <h3>Duetale does not file your taxes.</h3>
+        <p>A licensed CITN practitioner does. In Nigeria that is a legal requirement, not a technical one, and software cannot replace it.</p>
+      </div>
+      <div class="doct">
+        <h3>Duetale does not hold your money.</h3>
+        <p>Tax payments go directly to the authority against a payment reference. Only our service fee ever touches our account.</p>
+      </div>
+      <div class="doct">
+        <h3>Duetale is software and coordination.</h3>
+        <p>We handle the records, the computation, the chasing and the paperwork. The professional judgment belongs to professionals.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOUNDING GROUP ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Open now</p>
+        <h2>The founding group</h2>
+      </div>
+      <div class="accent">
+        <p class="price"><span class="fig">₦150,000</span><span class="per">per review</span></p>
+        <dl class="rows">
+          <div class="row"><dt>Includes</dt><dd>Twelve months of foreign income reviewed against the 2025 Acts, and a written position you can act on.</dd></div>
+          <div class="row"><dt>Signed off by</dt><dd>A licensed CITN practitioner.</dd></div>
+          <div class="row"><dt>Delivered by</dt><dd><b>30 September 2026</b></dd></div>
+          <div class="row"><dt>Credited</dt><dd>The full <b>₦150,000</b> comes off your March 2027 filing fee. It is not money on top.</dd></div>
+          <div class="row"><dt>If we're late</dt><dd>Full refund. No argument, no conditions.</dd></div>
+        </dl>
+        <p class="stage">We're taking a small first group deliberately. There isn't a polished product behind this yet — right now it's a licensed practitioner, a founder, and a lot of conversations with people in exactly your position. That's why it's refundable and why the date is in writing.</p>
+        <a class="btn btn-secondary" href="#waitlist">Join the founding group</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WAITLIST ===================== -->
+  <section id="waitlist">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">No obligation</p>
+        <h2>Join the waitlist</h2>
+      </div>
+      <p class="lede">Put your name down and we'll come back to you with a slot and the details. Joining costs nothing and commits you to nothing.</p>
+
+      <iframe name="gf" id="gf" style="display:none" aria-hidden="true" title="form target"></iframe>
+
+      <form class="form" id="waitlistForm"
+            action="https://docs.google.com/forms/d/e/1FAIpQLSdF1AG0THfxWDsAJlbS2GP_0r1Tm-AMuaVT0GxKhh4ve6VrxQ/formResponse"
+            method="POST" target="gf" novalidate>
+
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="entry.281391296" type="text" autocomplete="name" placeholder="Your name">
+          <p class="err" id="e-name"></p>
+        </div>
+
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="entry.1522410167" type="email" autocomplete="email" placeholder="you@example.com">
+          <p class="err" id="e-email"></p>
+        </div>
+
+        <div class="field">
+          <label for="f-whatsapp">WhatsApp <span class="opt">— optional</span></label>
+          <input id="f-whatsapp" name="entry.178844323" type="tel" autocomplete="tel" placeholder="+234…">
+        </div>
+
+        <div class="field">
+          <label for="f-role">What you do</label>
+          <!-- option VALUES must match the Google Form exactly; visible text may differ -->
+          <select id="f-role" name="entry.893979995">
+            <option value="">Select one</option>
+            <option value="Engineer">Software engineer</option>
+            <option value="Designer">Designer</option>
+            <option value="Product">Product</option>
+            <option value="Crypto">Crypto / web3</option>
+            <option value="Consultant">Consultant or agency</option>
+            <option value="Creator">Creator</option>
+            <option value="Other">Other</option>
+          </select>
+          <p class="err" id="e-role"></p>
+        </div>
+
+        <div class="field">
+          <label for="f-income">Roughly what you earn abroad monthly <span class="opt">— optional</span></label>
+          <select id="f-income" name="entry.370226694">
+            <option value="">Select one</option>
+            <option value="&lt;$1k">Under $1,000</option>
+            <option value="1–3k">$1,000–3,000</option>
+            <option value="3–6k">$3,000–6,000</option>
+            <option value="6–10k">$6,000–10,000</option>
+            <option value="10k+">Over $10,000</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="f-intent">Interested in a position review?</label>
+          <select id="f-intent" name="entry.455480117">
+            <option value="">Select one</option>
+            <option value="Yes">Yes, tell me more</option>
+            <option value="Maybe">Maybe later</option>
+            <option value="Just following">Just following along</option>
+          </select>
+          <p class="err" id="e-intent"></p>
+        </div>
+
+        <button class="btn btn-primary" type="submit" id="submitBtn">Join the waitlist</button>
+
+        <p class="privacy">Your details are used to contact you about Duetale and nothing else. Never sold, never shared.</p>
+        <p class="fallback"><a href="https://forms.gle/XdXdbrsbziPmyz5j7" target="_blank" rel="noopener">Form not working? Open it directly →</a></p>
+      </form>
+
+      <div class="success" id="success" role="status" aria-live="polite">
+        <h3>You're on the list.</h3>
+        <p>We'll be in touch. If you want to reach us sooner: <a class="mail" href="mailto:hello@duetale.com">hello@duetale.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHO ===================== -->
+  <section class="who">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Accountability</p>
+        <h2>Who is building this</h2>
+      </div>
+      <p>Duetale is built by <strong>Marcellus Nwankwo</strong>, a software engineer who has spent seven years building cross-border payments and digital asset infrastructure — remittance systems operating across sixty-plus markets, custody architecture, and settlement rails.</p>
+      <p>The tax work is not his. That is done by licensed CITN practitioners, which is both the law and the point.</p>
+      <p>Questions, doubts, or a hard problem you don't think fits: <a class="mail" href="mailto:hello@duetale.com">hello@duetale.com</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="mark" style="font-size:15px">duetale<span>.</span></div>
+        <!-- SWAP ON RC CERTIFICATE: replace the line below with
+             "Duetale Limited · RC [number]" once the certificate lands. -->
+        <div style="margin-top:8px">Duetale Limited — registration in progress</div>
+      </div>
+      <div>
+        <a href="mailto:hello@duetale.com">hello@duetale.com</a><br>
+        <a href="https://x.com/DuetaleHQ" target="_blank" rel="noopener">@DuetaleHQ</a>
+      </div>
+      <div class="r">© 2026</div>
+    </div>
+    <p class="legal">Duetale provides software and coordination services. It is not a licensed tax practitioner and does not file returns or hold client funds. Filing is carried out by licensed CITN practitioners. Nothing on this page is tax, legal, or financial advice.</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   WAITLIST FORM — Google Forms, no backend.
+
+   Form ID and entry IDs below were read from the live form.
+   If the founder EDITS the Google Form, two things can break:
+     1. Adding/removing a question changes nothing here, but
+     2. Renaming a multiple-choice OPTION silently breaks submission —
+        the <option value="..."> strings in the HTML above must match
+        the Google option text EXACTLY or the answer is dropped.
+   Re-check with: view-source on the form and search "entry."
+   ============================================================ */
+const FORM_ID = '1FAIpQLSdF1AG0THfxWDsAJlbS2GP_0r1Tm-AMuaVT0GxKhh4ve6VrxQ';
+const ENTRY = {
+  name:     'entry.281391296',
+  email:    'entry.1522410167',
+  whatsapp: 'entry.178844323',
+  role:     'entry.893979995',
+  income:   'entry.370226694',
+  intent:   'entry.455480117'
+};
+
+const SUBMIT_TIMEOUT_MS = 6000;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+(function () {
+  var form = document.getElementById('waitlistForm');
+  var frame = document.getElementById('gf');
+  var btn = document.getElementById('submitBtn');
+  var success = document.getElementById('success');
+  if (!form || !frame || !btn || !success) return;
+
+  var done = false;
+  var timer = null;
+
+  function setError(fieldId, errId, message) {
+    var field = document.getElementById(fieldId);
+    var err = document.getElementById(errId);
+    if (!field || !err) return;
+    if (message) {
+      field.setAttribute('aria-invalid', 'true');
+      field.setAttribute('aria-describedby', errId);
+      err.textContent = message;
+      err.classList.add('on');
+    } else {
+      field.removeAttribute('aria-invalid');
+      field.removeAttribute('aria-describedby');
+      err.textContent = '';
+      err.classList.remove('on');
+    }
+  }
+
+  /* Required set is stricter than the Google Form's own rules —
+     only Email is required server-side. */
+  function validate() {
+    var ok = true;
+    var firstBad = null;
+
+    var name = document.getElementById('f-name');
+    if (!name.value.trim()) { setError('f-name', 'e-name', 'Please enter your name.'); ok = false; firstBad = firstBad || name; }
+    else setError('f-name', 'e-name', null);
+
+    var email = document.getElementById('f-email');
+    var ev = email.value.trim();
+    if (!ev) { setError('f-email', 'e-email', 'Please enter your email.'); ok = false; firstBad = firstBad || email; }
+    else if (!EMAIL_RE.test(ev)) { setError('f-email', 'e-email', 'That email address does not look right.'); ok = false; firstBad = firstBad || email; }
+    else setError('f-email', 'e-email', null);
+
+    var role = document.getElementById('f-role');
+    if (!role.value) { setError('f-role', 'e-role', 'Please pick one.'); ok = false; firstBad = firstBad || role; }
+    else setError('f-role', 'e-role', null);
+
+    var intent = document.getElementById('f-intent');
+    if (!intent.value) { setError('f-intent', 'e-intent', 'Please pick one.'); ok = false; firstBad = firstBad || intent; }
+    else setError('f-intent', 'e-intent', null);
+
+    if (firstBad) firstBad.focus();
+    return ok;
+  }
+
+  function showSuccess() {
+    if (done) return;
+    done = true;
+    if (timer) clearTimeout(timer);
+    form.style.display = 'none';
+    success.classList.add('on');
+  }
+
+  /* Google Forms returns an opaque cross-origin response. We cannot read it,
+     so we treat the iframe's second load event as success. */
+  var loaded = false;
+  frame.addEventListener('load', function () {
+    if (!loaded) { loaded = true; return; }  // first load is the initial blank frame
+    showSuccess();
+  });
+
+  form.addEventListener('submit', function (e) {
+    if (!validate()) { e.preventDefault(); return; }
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    /* A submission that succeeded but never fired the load event must not
+       look like a failure — a lost lead is worse than a duplicate. */
+    timer = setTimeout(showSuccess, SUBMIT_TIMEOUT_MS);
+  });
+})();
+</script>
+</body>
+</html>
