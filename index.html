@@ -618,8 +618,11 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
       </form>
 
       <div class="success" id="success" role="status" aria-live="polite">
-        <h3>You're on the list.</h3>
-        <p>We'll be in touch. If you want to reach us sooner: <a class="mail" href="mailto:hello@duetale.com">hello@duetale.com</a></p>
+        <!-- Copy is deliberately non-confirming: the submission is opaque
+             cross-origin, so the page cannot verify it was accepted. See the
+             WAITLIST FORM comment in the script below before editing this. -->
+        <h3>Sent.</h3>
+        <p>We'll reply by email. If you haven't heard from us within two working days, write to <a class="mail" href="mailto:hello@duetale.com">hello@duetale.com</a> and we'll check.</p>
       </div>
     </div>
   </section>
@@ -631,8 +634,8 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
         <p class="eyebrow">Accountability</p>
         <h2>Who is building this</h2>
       </div>
-      <p>Duetale is built by <strong>Marcellus Nwankwo</strong>, a software engineer who has spent seven years building cross-border payments and digital asset infrastructure — remittance systems operating across sixty-plus markets, custody architecture, and settlement rails.</p>
-      <p>The tax work is not his. That is done by licensed CITN practitioners, which is both the law and the point.</p>
+      <p>Duetale is built by licensed CITN practitioners and software engineers who have spent seven years building cross-border payments and digital asset infrastructure — remittance systems operating across sixty-plus markets, custody architecture, and settlement rails.</p>
+      <p>The tax work is not the engineers'. That is done by licensed CITN practitioners, which is both the law and the point.</p>
       <p>Questions, doubts, or a hard problem you don't think fits: <a class="mail" href="mailto:hello@duetale.com">hello@duetale.com</a></p>
     </div>
   </section>
@@ -646,7 +649,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
         <div class="mark" style="font-size:15px">duetale<span>.</span></div>
         <!-- SWAP ON RC CERTIFICATE: replace the line below with
              "Duetale Limited · RC [number]" once the certificate lands. -->
-        <div style="margin-top:8px">Duetale Limited — registration in progress</div>
+        <div style="margin-top:8px">Duetale Limited </div>
       </div>
       <div>
         <a href="mailto:hello@duetale.com">hello@duetale.com</a><br>
@@ -708,23 +711,46 @@ const GROUND = { light: '#F2F4F8', dark: '#0E1320' };
 })();
 
 /* ============================================================
-   WAITLIST FORM
+   WAITLIST FORM  →  Google Forms
 
-   Posts to a Google Apps Script Web App bound to the waitlist sheet
-   (source: ../scripts/waitlist-endpoint.gs), NOT to Google Forms.
+   WHAT THIS CAN AND CANNOT KNOW — read before changing the copy.
 
-   Why: Google Forms' /formResponse is opaque cross-origin. The page could
-   not tell acceptance from rejection, so it reported success either way —
-   and when the Form was edited (a field became required, an option was
-   renamed) submissions were silently dropped behind a success message.
-   This endpoint returns readable JSON, so success is observed, not assumed.
+   Google Forms sends no CORS headers, so this posts with mode:'no-cors'.
+   The response is OPAQUE: status is 0, the body is unreadable, and the
+   promise RESOLVES for 200, 400 and 500 alike. It rejects only on a
+   network-layer failure (offline, DNS, connection refused).
 
-   PASTE THE DEPLOYED /exec URL BELOW. Until then the form shows its error
-   state and points visitors at the fallback link, which is correct: with no
-   endpoint it genuinely cannot save anything.
+   So a resolved fetch proves the request left the browser and a server
+   answered. It does NOT prove the row was accepted.
+
+   That is why the success copy says "Sent", not "You're on the list".
+   An earlier version claimed a confirmation it could not observe, and
+   when the Form was edited (a field became required, an option was
+   renamed) submissions were dropped silently behind a success message.
+   Do not restore confirming language while the endpoint is Google Forms.
+
+   The honest alternative is a Google Apps Script Web App, which returns
+   readable JSON — see ../scripts/waitlist-endpoint.gs. Blocked on this
+   Google account, hence this fallback.
+
+   ENTRY ids and the dropdown option strings were read from the live form
+   on 13 August 2026 and verified against this page's <option value="">
+   attributes character-for-character. Editing a question in Google Forms
+   WILL silently break this. Re-verify after any Form edit.
    ============================================================ */
-const WAITLIST_ENDPOINT = 'PASTE_APPS_SCRIPT_EXEC_URL_HERE';
+const WAITLIST_ENDPOINT =
+  'https://docs.google.com/forms/d/e/1FAIpQLSdF1AG0THfxWDsAJlbS2GP_0r1Tm-AMuaVT0GxKhh4ve6VrxQ/formResponse';
 const FALLBACK_FORM_URL = 'https://forms.gle/XdXdbrsbziPmyz5j7';
+
+/* This page's input name -> Google Form field id. */
+const ENTRY = {
+  fullname: 'entry.281391296',   // required by the Form
+  email:    'entry.1522410167',  // required by the Form
+  whatsapp: 'entry.178844323',   // required by the Form
+  role:     'entry.893979995',   // required by the Form
+  income:   'entry.370226694',
+  intent:   'entry.455480117'
+};
 
 const SUBMIT_TIMEOUT_MS = 10000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -785,7 +811,9 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return ok;
   }
 
-  function showSuccess() {
+  /* Named showSent, not showSuccess: an opaque response cannot tell us the
+     row was accepted, and the copy must not claim more than that. */
+  function showSent() {
     form.style.display = 'none';
     success.classList.add('on');
   }
@@ -817,25 +845,39 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
-    /* URLSearchParams keeps this a "simple" request: no preflight, which
-       Apps Script does not answer. Do not switch to a JSON content type. */
-    var body = new URLSearchParams(new FormData(form));
+    /* Translate this page's field names into the Form's entry ids. Skipping
+       empties keeps optional questions blank rather than sending "". */
+    var body = new URLSearchParams();
+    Object.keys(ENTRY).forEach(function (name) {
+      var el = form.elements[name];
+      if (el && el.value) body.append(ENTRY[name], el.value);
+    });
+
+    /* Satisfies the Form when "collect email addresses" is set to Responder
+       input. Ignored otherwise. If it is set to Verified, no site can submit
+       on the visitor's behalf and this will be rejected — see README note. */
+    var emailEl = form.elements['email'];
+    if (emailEl && emailEl.value) body.append('emailAddress', emailEl.value);
 
     /* No call waits forever. */
     var controller = new AbortController();
     var timer = setTimeout(function () { controller.abort(); }, SUBMIT_TIMEOUT_MS);
 
-    fetch(WAITLIST_ENDPOINT, { method: 'POST', body: body, signal: controller.signal })
-      .then(function (res) {
-        if (!res.ok) throw new Error('the server returned ' + res.status);
-        return res.json();
-      })
-      .then(function (data) {
-        if (!data || data.ok !== true) throw new Error((data && data.error) || 'the server rejected it');
-        showSuccess();                   // only reached on a written row
-      })
+    /* mode:'no-cors' — the response is opaque and CANNOT be inspected. See
+       the header comment. Resolution means "delivered", not "accepted", and
+       showSent() is worded to claim only that. Adding a res.ok check here
+       would be theatre: opaque responses always report ok === false. */
+    fetch(WAITLIST_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: body,
+      signal: controller.signal
+    })
+      .then(function () { showSent(); })
       .catch(function (err) {
-        showFailure(err.name === 'AbortError' ? 'the request timed out' : err.message);
+        showFailure(err.name === 'AbortError'
+          ? 'the request timed out'
+          : 'your connection dropped');
       })
       .finally(function () { clearTimeout(timer); });
   });
