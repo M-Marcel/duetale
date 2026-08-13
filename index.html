@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0E1320">
+<meta name="theme-color" content="#F2F4F8" id="themeColor">
 
 <title>Duetale — tax compliance for Nigerians earning abroad</title>
 <meta name="description" content="Know exactly where you stand on Nigerian tax when you earn in foreign currency. Reviewed and signed off by a licensed CITN practitioner.">
@@ -20,32 +20,57 @@
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230E1320'/%3E%3Ctext x='16' y='23' font-family='JetBrains Mono,ui-monospace,SF Mono,Menlo,monospace' font-size='22' font-weight='700' fill='%23ECEFF7' text-anchor='middle'%3Ed%3C/text%3E%3C/svg%3E">
 
+<!-- Applies a stored dark preference BEFORE first paint. Light is the
+     default, so nothing runs for light visitors and there is no flash.
+     Deliberately not reading prefers-color-scheme: light is the specified
+     default, and following the OS would hand dark to most visitors. -->
+<script>
+(function(){try{if(localStorage.getItem('duetale-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
-   Duetale — Design System v1
-   Canonical source: ../DESIGN-SYSTEM.md · token mirror: ../tokens.css
-   The :root block below is copied verbatim from §9. It is a MIRROR —
-   if a token changes, change it there first, then here.
+   Duetale — Design System v1.1
+   Canonical: ../DESIGN-SYSTEM.md · token mirror: ../tokens.css
+   The two :root blocks below MIRROR tokens.css exactly.
+   Verify with: node scripts/check-tokens.mjs
    Inlined because this page ships as a single draggable file.
    ============================================================ */
 
+/* ---- LIGHT (default ground) ---- */
 :root{
-  --ink:#0E1320; --panel:#161D2E; --panel-2:#1B2438;
-  --line:rgba(255,255,255,0.08); --line-2:rgba(255,255,255,0.14);
-  --text:#ECEFF7; --body:#C5CDDD; --muted:#8B97AE;
-  --cyan:#3FC8D4; --cyan-bright:#5FD3E2; --cyan-deep:#2A9BA6;
-  --cyan-wash:rgba(63,200,212,0.10); --cyan-line:rgba(63,200,212,0.35);
-  --positive:#3FD98F; --caution:#F2B04A; --danger:#F2685A;
+  --ink:#F2F4F8; --panel:#FFFFFF; --panel-2:#E7ECF3;
+  --line:rgba(14,19,32,0.10); --line-2:rgba(14,19,32,0.18);
+  --text:#0E1320; --body:#39435A; --muted:#576076;
+  --cyan:#3FC8D4; --cyan-text:#0F6F79; --on-cyan:#0E1320;
+  --cyan-bright:#2A9BA6; --cyan-deep:#0B565E;
+  --cyan-wash:rgba(63,200,212,0.12); --cyan-line:rgba(15,111,121,0.35);
+  --positive:#127350; --caution:#8A5A00; --danger:#C0362A;
+  --nav-bg:rgba(242,244,248,0.92);
+  --track:#D8DFE9;
   --radius:3px; --radius-sm:2px;
   --display:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
   --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 
   --dur-hover:.15s; --dur-state:.3s; --ease:cubic-bezier(.2,.7,.3,1);
   --wrap:1000px;
+}
+
+/* ---- DARK ---- */
+:root[data-theme="dark"]{
+  --ink:#0E1320; --panel:#161D2E; --panel-2:#1B2438;
+  --line:rgba(255,255,255,0.08); --line-2:rgba(255,255,255,0.14);
+  --text:#ECEFF7; --body:#C5CDDD; --muted:#8B97AE;
+  --cyan:#3FC8D4; --cyan-text:#3FC8D4; --on-cyan:#0E1320;
+  --cyan-bright:#5FD3E2; --cyan-deep:#2A9BA6;
+  --cyan-wash:rgba(63,200,212,0.10); --cyan-line:rgba(63,200,212,0.35);
+  --positive:#3FD98F; --caution:#F2B04A; --danger:#F2685A;
+  --nav-bg:rgba(14,19,32,0.92);
+  --track:#1B2438;
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -64,7 +89,7 @@ body{
 
 /* §7: focus is never removed. */
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{
-  outline:2px solid var(--cyan-bright);
+  outline:2px solid var(--cyan-text);
   outline-offset:2px;
 }
 
@@ -73,7 +98,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{
 /* ---------- section header: eyebrow + h2 + 2px rule (§4) ---------- */
 .eyebrow{
   font-family:var(--display);font-weight:600;font-size:12px;
-  letter-spacing:0.18em;text-transform:uppercase;color:var(--cyan);
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--cyan-text);
   margin:0 0 12px;
 }
 .sec-head{border-bottom:2px solid var(--line-2);padding-bottom:16px;margin-bottom:32px}
@@ -87,31 +112,46 @@ section{padding:56px 0}
 /* ---------- nav ---------- */
 .nav{
   position:sticky;top:0;z-index:50;
-  background:rgba(14,19,32,0.92);
+  background:var(--nav-bg);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
 }
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
+.nav-right{display:flex;align-items:center;gap:8px}
 .mark{
   font-family:var(--display);font-weight:700;font-size:17px;
   letter-spacing:-0.03em;color:var(--text);text-decoration:none;
 }
-.mark span{color:var(--cyan)}
-/* Single cyan attention-mark per viewport (§1 rule 1) lives on the hero CTA,
+.mark span{color:var(--cyan-text)}
+/* The single cyan attention-mark per viewport (§1 rule 1) is the hero CTA,
    so this nav link rests in --text and only warms on hover. */
 .nav-link{
+  display:inline-flex;align-items:center;min-height:44px;padding:0 4px;
   font-family:var(--display);font-weight:600;font-size:12px;
   letter-spacing:0.10em;text-transform:uppercase;
   color:var(--text);text-decoration:none;transition:color var(--dur-hover) var(--ease);
 }
-.nav-link:hover{color:var(--cyan)}
+.nav-link:hover{color:var(--cyan-text)}
+.nav-short{display:none}
+
+.theme-toggle{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:44px;min-width:64px;padding:0 12px;
+  font-family:var(--display);font-weight:600;font-size:12px;
+  letter-spacing:0.10em;text-transform:uppercase;
+  color:var(--muted);background:transparent;
+  border:1px solid var(--line-2);border-radius:var(--radius);
+  cursor:pointer;
+  transition:color var(--dur-hover) var(--ease),border-color var(--dur-hover) var(--ease);
+}
+.theme-toggle:hover{color:var(--text);border-color:var(--muted)}
 
 /* ---------- hero ---------- */
 .hero{padding:80px 0 56px}
 .hero h1{
   font-family:var(--display);font-weight:700;
   font-size:clamp(38px,7vw,68px);line-height:0.98;letter-spacing:-0.035em;
-  color:var(--text);margin:0 0 24px;max-width:16ch;
+  color:var(--text);margin:0 0 24px;max-width:21ch;   /* sized to the longest line of the headline */
 }
 .hero h1 .dim{color:var(--muted);display:block}
 .hero-sub{max-width:60ch;font-size:17px;line-height:1.65;margin:0 0 32px}
@@ -123,9 +163,9 @@ section{padding:56px 0}
   border:1px solid transparent;
   transition:background var(--dur-hover) var(--ease),border-color var(--dur-hover) var(--ease);
 }
-.btn-primary{background:var(--cyan);color:var(--ink)}
-.btn-primary:hover{background:var(--cyan-bright)}
-.btn-primary:active{background:var(--cyan-deep)}
+.btn-primary{background:var(--cyan);color:var(--on-cyan)}
+.btn-primary:hover{background:var(--cyan-bright);color:var(--on-cyan)}
+.btn-primary:active{background:var(--cyan-deep);color:#FFFFFF}
 .btn-secondary{background:transparent;color:var(--text);border-color:var(--line-2)}
 .btn-secondary:hover{border-color:var(--muted)}
 .cta-row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
@@ -146,7 +186,7 @@ section{padding:56px 0}
 }
 .num{
   font-family:var(--display);font-weight:700;font-size:13px;
-  letter-spacing:0.10em;color:var(--cyan);
+  letter-spacing:0.10em;color:var(--cyan-text);
   font-variant-numeric:tabular-nums;display:block;margin-bottom:12px;
 }
 .card h3,.step h3{
@@ -176,9 +216,9 @@ section{padding:56px 0}
   font-family:var(--display);font-weight:500;font-size:14px;
   color:var(--body);font-variant-numeric:tabular-nums;
 }
-.band-track{height:10px;background:var(--panel-2);border-radius:var(--radius-sm);overflow:hidden}
+.band-track{height:10px;background:var(--track);border-radius:var(--radius-sm);overflow:hidden}
 .band-bar{
-  display:block;height:100%;background:var(--cyan);
+  display:block;height:100%;background:var(--cyan-text);
   width:var(--w);min-width:4px;   /* 0% still reads as a rung, not a render failure */
   border-radius:var(--radius-sm);
 }
@@ -201,6 +241,8 @@ section{padding:56px 0}
 .doct p{margin:0;max-width:68ch;font-size:16px;line-height:1.65}
 
 /* ---------- founding group ---------- */
+/* The ONE accent card on the page (§4: "used sparingly, for the one block
+   that matters most"). No other block carries a side accent. */
 .accent{
   background:var(--panel);border:1px solid var(--line);
   border-left:2px solid var(--cyan);border-radius:var(--radius);padding:24px;
@@ -244,19 +286,27 @@ section{padding:56px 0}
 }
 .field select{font-family:var(--display);font-size:14px}
 .field input::placeholder{font-family:var(--display);color:var(--muted);font-size:14px}
-.field input:focus,.field select:focus{border-color:var(--cyan)}
+.field input:focus,.field select:focus{border-color:var(--cyan-text)}
 .field input[aria-invalid="true"],.field select[aria-invalid="true"]{border-color:var(--danger)}
 .err{display:none;margin-top:8px;font-size:13px;color:var(--danger)}
 .err.on{display:block}
+/* Submission failure. Bordered rather than filled: depth from borders (§1). */
+.formerr{
+  margin:16px 0 0;padding:12px 14px;max-width:520px;
+  border:1px solid var(--danger);border-radius:var(--radius);
+  color:var(--danger);font-size:14px;line-height:1.55;
+}
+.formerr[hidden]{display:none}
+.formerr a{color:var(--danger);text-decoration:underline}
 .privacy{margin:20px 0 8px;font-size:13px;color:var(--muted);max-width:68ch}
 .fallback{font-size:12px;color:var(--muted)}
 .fallback a{color:var(--muted);text-decoration:underline}
-.fallback a:hover{color:var(--cyan)}
-.success{display:none;background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--positive);border-radius:var(--radius);padding:24px;max-width:520px}
+.fallback a:hover{color:var(--cyan-text)}
+.success{display:none;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px;max-width:520px}
 .success.on{display:block}
-.success h3{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:-0.015em;color:var(--text);margin:0 0 8px;text-transform:uppercase}
+.success h3{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:-0.015em;color:var(--positive);margin:0 0 8px;text-transform:uppercase}
 .success p{margin:0;max-width:60ch}
-a.mail{color:var(--cyan);text-decoration:none}
+a.mail{color:var(--cyan-text);text-decoration:none}
 a.mail:hover{color:var(--cyan-bright);text-decoration:underline}
 
 /* ---------- who ---------- */
@@ -270,7 +320,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
   font-family:var(--display);font-size:13px;color:var(--muted);
 }
 .foot a{color:var(--muted);text-decoration:none}
-.foot a:hover{color:var(--cyan)}
+.foot a:hover{color:var(--cyan-text)}
 .foot .r{text-align:right;font-variant-numeric:tabular-nums}
 .legal{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;line-height:1.55;color:var(--muted);max-width:82ch}
 
@@ -286,6 +336,10 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
   .foot{grid-template-columns:1fr;gap:16px}
   .foot .r{text-align:left}
   .deadline{flex-direction:column;gap:8px}
+}
+@media (max-width:520px){
+  .nav-full{display:none}
+  .nav-short{display:inline}
 }
 @media (max-width:400px){
   .wrap{padding:0 16px}
@@ -309,7 +363,14 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
 <header class="nav">
   <div class="wrap nav-in">
     <a class="mark" href="#top">duetale<span>.</span></a>
-    <a class="nav-link" href="#waitlist">Join the waitlist</a>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark theme">
+        <span id="themeLabel">Dark</span>
+      </button>
+      <a class="nav-link" href="#waitlist">
+        <span class="nav-full">Join the waitlist</span><span class="nav-short">Waitlist</span>
+      </a>
+    </div>
   </div>
 </header>
 
@@ -319,7 +380,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
   <section class="hero">
     <div class="wrap">
       <p class="eyebrow">Tax compliance for Nigerians earning abroad</p>
-      <h1>You earn in dollars.<span class="dim">Your tax is still Nigerian.</span></h1>
+      <h1>You earn in dollars or naira.<span class="dim">Your tax is still Nigerian.</span></h1>
       <p class="hero-sub">Duetale works out exactly where you stand — reviewed and signed off by a licensed CITN practitioner, not guesswork.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#waitlist">Join the founding group</a>
@@ -411,22 +472,22 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
         </div>
         <div class="band">
           <span class="band-range">₦800,001 – ₦3,000,000</span>
-          <span class="band-track"><span class="band-bar" style="--w:60%;opacity:.52"></span></span>
+          <span class="band-track"><span class="band-bar" style="--w:60%;opacity:.60"></span></span>
           <span class="band-rate">15%</span>
         </div>
         <div class="band">
           <span class="band-range">₦3,000,001 – ₦12,000,000</span>
-          <span class="band-track"><span class="band-bar" style="--w:72%;opacity:.64"></span></span>
+          <span class="band-track"><span class="band-bar" style="--w:72%;opacity:.70"></span></span>
           <span class="band-rate">18%</span>
         </div>
         <div class="band">
           <span class="band-range">₦12,000,001 – ₦25,000,000</span>
-          <span class="band-track"><span class="band-bar" style="--w:84%;opacity:.76"></span></span>
+          <span class="band-track"><span class="band-bar" style="--w:84%;opacity:.80"></span></span>
           <span class="band-rate">21%</span>
         </div>
         <div class="band">
           <span class="band-range">₦25,000,001 – ₦50,000,000</span>
-          <span class="band-track"><span class="band-bar" style="--w:92%;opacity:.88"></span></span>
+          <span class="band-track"><span class="band-bar" style="--w:92%;opacity:.90"></span></span>
           <span class="band-rate">23%</span>
         </div>
         <div class="band">
@@ -490,33 +551,29 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
       </div>
       <p class="lede">Put your name down and we'll come back to you with a slot and the details. Joining costs nothing and commits you to nothing.</p>
 
-      <iframe name="gf" id="gf" style="display:none" aria-hidden="true" title="form target"></iframe>
-
-      <form class="form" id="waitlistForm"
-            action="https://docs.google.com/forms/d/e/1FAIpQLSdF1AG0THfxWDsAJlbS2GP_0r1Tm-AMuaVT0GxKhh4ve6VrxQ/formResponse"
-            method="POST" target="gf" novalidate>
+      <form class="form" id="waitlistForm" novalidate>
 
         <div class="field">
-          <label for="f-name">Name</label>
-          <input id="f-name" name="entry.281391296" type="text" autocomplete="name" placeholder="Your name">
+          <label for="f-name">Full name</label>
+          <input id="f-name" name="fullname" type="text" autocomplete="name" placeholder="Your name">
           <p class="err" id="e-name"></p>
         </div>
 
         <div class="field">
           <label for="f-email">Email</label>
-          <input id="f-email" name="entry.1522410167" type="email" autocomplete="email" placeholder="you@example.com">
+          <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
           <p class="err" id="e-email"></p>
         </div>
 
         <div class="field">
-          <label for="f-whatsapp">WhatsApp <span class="opt">— optional</span></label>
-          <input id="f-whatsapp" name="entry.178844323" type="tel" autocomplete="tel" placeholder="+234…">
+          <label for="f-whatsapp">WhatsApp</label>
+          <input id="f-whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="+234…">
+          <p class="err" id="e-whatsapp"></p>
         </div>
 
         <div class="field">
           <label for="f-role">What you do</label>
-          <!-- option VALUES must match the Google Form exactly; visible text may differ -->
-          <select id="f-role" name="entry.893979995">
+          <select id="f-role" name="role">
             <option value="">Select one</option>
             <option value="Engineer">Software engineer</option>
             <option value="Designer">Designer</option>
@@ -524,14 +581,13 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
             <option value="Crypto">Crypto / web3</option>
             <option value="Consultant">Consultant or agency</option>
             <option value="Creator">Creator</option>
-            <option value="Other">Other</option>
           </select>
           <p class="err" id="e-role"></p>
         </div>
 
         <div class="field">
           <label for="f-income">Roughly what you earn abroad monthly <span class="opt">— optional</span></label>
-          <select id="f-income" name="entry.370226694">
+          <select id="f-income" name="income">
             <option value="">Select one</option>
             <option value="&lt;$1k">Under $1,000</option>
             <option value="1–3k">$1,000–3,000</option>
@@ -544,7 +600,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
 
         <div class="field">
           <label for="f-intent">Interested in a position review?</label>
-          <select id="f-intent" name="entry.455480117">
+          <select id="f-intent" name="intent">
             <option value="">Select one</option>
             <option value="Yes">Yes, tell me more</option>
             <option value="Maybe">Maybe later</option>
@@ -554,6 +610,8 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
         </div>
 
         <button class="btn btn-primary" type="submit" id="submitBtn">Join the waitlist</button>
+
+        <p class="formerr" id="formError" role="alert" hidden></p>
 
         <p class="privacy">Your details are used to contact you about Duetale and nothing else. Never sold, never shared.</p>
         <p class="fallback"><a href="https://forms.gle/XdXdbrsbziPmyz5j7" target="_blank" rel="noopener">Form not working? Open it directly →</a></p>
@@ -602,38 +660,83 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
 
 <script>
 /* ============================================================
-   WAITLIST FORM — Google Forms, no backend.
+   THEME TOGGLE
 
-   Form ID and entry IDs below were read from the live form.
-   If the founder EDITS the Google Form, two things can break:
-     1. Adding/removing a question changes nothing here, but
-     2. Renaming a multiple-choice OPTION silently breaks submission —
-        the <option value="..."> strings in the HTML above must match
-        the Google option text EXACTLY or the answer is dropped.
-   Re-check with: view-source on the form and search "entry."
+   Light is the default ground. Dark is opt-in and persisted.
+   prefers-color-scheme is deliberately NOT consulted: light is the
+   specified default, and following the OS would serve dark to the
+   large share of visitors who run their phone in dark mode.
+
+   The pre-paint script in <head> applies a stored dark preference
+   before first render, so returning dark users never see a flash.
    ============================================================ */
-const FORM_ID = '1FAIpQLSdF1AG0THfxWDsAJlbS2GP_0r1Tm-AMuaVT0GxKhh4ve6VrxQ';
-const ENTRY = {
-  name:     'entry.281391296',
-  email:    'entry.1522410167',
-  whatsapp: 'entry.178844323',
-  role:     'entry.893979995',
-  income:   'entry.370226694',
-  intent:   'entry.455480117'
-};
+const THEME_KEY = 'duetale-theme';
+const GROUND = { light: '#F2F4F8', dark: '#0E1320' };
 
-const SUBMIT_TIMEOUT_MS = 6000;
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var label = document.getElementById('themeLabel');
+  var meta = document.getElementById('themeColor');
+  if (!btn || !label) return;
+
+  function current() {
+    return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  }
+
+  function render() {
+    var next = current() === 'dark' ? 'light' : 'dark';
+    label.textContent = next === 'dark' ? 'Dark' : 'Light';
+    btn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+    if (meta) meta.setAttribute('content', GROUND[current()]);
+  }
+
+  function apply(theme) {
+    if (theme === 'dark') root.setAttribute('data-theme', 'dark');
+    else root.removeAttribute('data-theme');
+    /* Storage can throw in private mode or with cookies blocked.
+       The toggle must keep working even when persistence cannot. */
+    try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
+    render();
+  }
+
+  btn.addEventListener('click', function () {
+    apply(current() === 'dark' ? 'light' : 'dark');
+  });
+
+  render();
+})();
+
+/* ============================================================
+   WAITLIST FORM
+
+   Posts to a Google Apps Script Web App bound to the waitlist sheet
+   (source: ../scripts/waitlist-endpoint.gs), NOT to Google Forms.
+
+   Why: Google Forms' /formResponse is opaque cross-origin. The page could
+   not tell acceptance from rejection, so it reported success either way —
+   and when the Form was edited (a field became required, an option was
+   renamed) submissions were silently dropped behind a success message.
+   This endpoint returns readable JSON, so success is observed, not assumed.
+
+   PASTE THE DEPLOYED /exec URL BELOW. Until then the form shows its error
+   state and points visitors at the fallback link, which is correct: with no
+   endpoint it genuinely cannot save anything.
+   ============================================================ */
+const WAITLIST_ENDPOINT = 'PASTE_APPS_SCRIPT_EXEC_URL_HERE';
+const FALLBACK_FORM_URL = 'https://forms.gle/XdXdbrsbziPmyz5j7';
+
+const SUBMIT_TIMEOUT_MS = 10000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 (function () {
   var form = document.getElementById('waitlistForm');
-  var frame = document.getElementById('gf');
   var btn = document.getElementById('submitBtn');
   var success = document.getElementById('success');
-  if (!form || !frame || !btn || !success) return;
+  var formError = document.getElementById('formError');
+  if (!form || !btn || !success || !formError) return;
 
-  var done = false;
-  var timer = null;
+  var sending = false;
 
   function setError(fieldId, errId, message) {
     var field = document.getElementById(fieldId);
@@ -652,8 +755,6 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     }
   }
 
-  /* Required set is stricter than the Google Form's own rules —
-     only Email is required server-side. */
   function validate() {
     var ok = true;
     var firstBad = null;
@@ -668,6 +769,10 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     else if (!EMAIL_RE.test(ev)) { setError('f-email', 'e-email', 'That email address does not look right.'); ok = false; firstBad = firstBad || email; }
     else setError('f-email', 'e-email', null);
 
+    var whatsapp = document.getElementById('f-whatsapp');
+    if (!whatsapp.value.trim()) { setError('f-whatsapp', 'e-whatsapp', 'Please enter a WhatsApp number.'); ok = false; firstBad = firstBad || whatsapp; }
+    else setError('f-whatsapp', 'e-whatsapp', null);
+
     var role = document.getElementById('f-role');
     if (!role.value) { setError('f-role', 'e-role', 'Please pick one.'); ok = false; firstBad = firstBad || role; }
     else setError('f-role', 'e-role', null);
@@ -681,28 +786,58 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   }
 
   function showSuccess() {
-    if (done) return;
-    done = true;
-    if (timer) clearTimeout(timer);
     form.style.display = 'none';
     success.classList.add('on');
   }
 
-  /* Google Forms returns an opaque cross-origin response. We cannot read it,
-     so we treat the iframe's second load event as success. */
-  var loaded = false;
-  frame.addEventListener('load', function () {
-    if (!loaded) { loaded = true; return; }  // first load is the initial blank frame
-    showSuccess();
-  });
+  /* Never silently swallow a failure: the visitor must know the submission
+     did not save, and must be given a route that works. */
+  function showFailure(reason) {
+    formError.innerHTML = 'We could not save that — ' + reason +
+      '. Please try again, or <a href="' + FALLBACK_FORM_URL +
+      '" target="_blank" rel="noopener">use the form directly</a>.';
+    formError.hidden = false;
+    btn.disabled = false;
+    btn.textContent = 'Join the waitlist';
+    sending = false;
+  }
 
   form.addEventListener('submit', function (e) {
-    if (!validate()) { e.preventDefault(); return; }
+    e.preventDefault();
+    if (sending) return;                 // guard the double-click, not the network
+    formError.hidden = true;
+    if (!validate()) return;
+
+    if (!WAITLIST_ENDPOINT || WAITLIST_ENDPOINT.indexOf('PASTE_') === 0) {
+      showFailure('the waitlist endpoint is not configured yet');
+      return;
+    }
+
+    sending = true;
     btn.disabled = true;
     btn.textContent = 'Sending…';
-    /* A submission that succeeded but never fired the load event must not
-       look like a failure — a lost lead is worse than a duplicate. */
-    timer = setTimeout(showSuccess, SUBMIT_TIMEOUT_MS);
+
+    /* URLSearchParams keeps this a "simple" request: no preflight, which
+       Apps Script does not answer. Do not switch to a JSON content type. */
+    var body = new URLSearchParams(new FormData(form));
+
+    /* No call waits forever. */
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, SUBMIT_TIMEOUT_MS);
+
+    fetch(WAITLIST_ENDPOINT, { method: 'POST', body: body, signal: controller.signal })
+      .then(function (res) {
+        if (!res.ok) throw new Error('the server returned ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data || data.ok !== true) throw new Error((data && data.error) || 'the server rejected it');
+        showSuccess();                   // only reached on a written row
+      })
+      .catch(function (err) {
+        showFailure(err.name === 'AbortError' ? 'the request timed out' : err.message);
+      })
+      .finally(function () { clearTimeout(timer); });
   });
 })();
 </script>
