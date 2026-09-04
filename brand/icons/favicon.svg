@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!--
+    The mark, at the 3-unit stroke §3 specifies below 16px so the two plates
+    stay distinguishable.
+
+    The supplied file strokes #0E1320 flat, which disappears against a dark
+    browser tab. A favicon cannot ship two files under one <link>, so the
+    -reverse colour the package already specifies for dark grounds is applied
+    by media query here. Not a recolour: both values are brand --text.
+  -->
+  <style>
+    .plate { stroke: #0E1320; }
+    @media (prefers-color-scheme: dark) { .plate { stroke: #ECEFF7; } }
+  </style>
+  <rect class="plate" x="1.75" y="1.75" width="18.5" height="18.5" rx="3" fill="none" stroke-width="3"/>
+  <rect x="11.5" y="11.5" width="19" height="19" rx="3" fill="#3FC8D4"/>
+</svg>

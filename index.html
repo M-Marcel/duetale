@@ -12,13 +12,30 @@
 <meta property="og:url" content="https://duetale.com">
 <meta property="og:title" content="Duetale — tax compliance for Nigerians earning abroad">
 <meta property="og:description" content="Know exactly where you stand on Nigerian tax when you earn in foreign currency. Reviewed and signed off by a licensed CITN practitioner.">
-<!-- og:image deliberately omitted: no asset exists yet, and a broken image
-     preview in a WhatsApp share is worse than a text-only card. -->
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://duetale.com/brand/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Duetale — know exactly where you stand on Nigerian tax when you earn in foreign currency.">
+<meta property="og:site_name" content="Duetale">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://duetale.com/brand/og.png">
 <meta name="twitter:title" content="Duetale — tax compliance for Nigerians earning abroad">
 <meta name="twitter:description" content="Know exactly where you stand on Nigerian tax when you earn in foreign currency. Reviewed and signed off by a licensed CITN practitioner.">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230E1320'/%3E%3Ctext x='16' y='23' font-family='JetBrains Mono,ui-monospace,SF Mono,Menlo,monospace' font-size='22' font-weight='700' fill='%23ECEFF7' text-anchor='middle'%3Ed%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://duetale.com/">
+
+<!-- The mark, from duetale_brand_package/icons/. This was a placeholder
+     letter "d" on a dark square — not the brand, and not any asset the
+     package ships. The SVG carries both grounds by media query, because a
+     favicon cannot ship two files under one <link> and the supplied dark
+     stroke disappears against a dark browser tab. -->
+<link rel="icon" href="brand/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="brand/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="brand/icons/favicon-16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="brand/icons/apple-touch-icon-180.png" sizes="180x180">
+<!-- Relative, so the mark survives a preview deploy under a project path.
+     og:image stays absolute below: every scraper requires it. -->
+<link rel="manifest" href="brand/icons/site.webmanifest">
 
 <!-- Applies a stored dark preference BEFORE first paint. Light is the
      default, so nothing runs for light visitors and there is no flash.
@@ -34,11 +51,15 @@
 
 <style>
 /* ============================================================
-   Duetale — Design System v1.1
-   Canonical: ../DESIGN-SYSTEM.md · token mirror: ../tokens.css
-   The two :root blocks below MIRROR tokens.css exactly.
+   Duetale — Design System v2.0
+   Canonical: ../duetale_brand_package/ — BRAND.md for the rules, its
+   tokens.css for the values, reference/*.dc.html for identity.
+   ../DESIGN-SYSTEM.md is a changelog (BRAND.md §9), not the authority.
+   Token mirror: ../tokens.css. The two :root blocks below MIRROR it.
    Verify with: node scripts/check-tokens.mjs
-   Inlined because this page ships as a single draggable file.
+   Inlined because the page ships without a build step. The brand assets
+   it references do sit beside it, under ./brand/ — a favicon, a web
+   manifest and a share card cannot be data URIs and still work.
    ============================================================ */
 
 /* ---- LIGHT (default ground) ---- */
@@ -55,8 +76,12 @@
   --radius:3px; --radius-sm:2px;
   --display:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
   --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  /* The brand package's own names for the three above. Aliased so anything
+     cut from the package or its reference specimens drops in unchanged. */
+  --font-display:var(--display); --font-body:var(--sans);
 
   --dur-hover:.15s; --dur-state:.3s; --ease:cubic-bezier(.2,.7,.3,1);
+  --t:var(--dur-hover);
   --wrap:1000px;
 }
 
@@ -118,11 +143,27 @@ section{padding:56px 0}
 }
 .nav-in{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
 .nav-right{display:flex;align-items:center;gap:8px}
-.mark{
+/* ---- identity ----------------------------------------------------
+   The lockup: mark plus wordmark, at the proportions the reference
+   specimens set — a 22px mark against a 17px wordmark, 10px between.
+   Both plates are drawn inline so the outline follows currentColor
+   and the theme toggle needs no second asset; the filled plate holds
+   --cyan in both grounds, exactly as the supplied SVGs do.
+
+   .logo-stop is the only cyan the lockup spends. --cyan-text rather
+   than --cyan because it is type, and --cyan does not hold AA as type
+   on paper. The hero CTA is the viewport's one attention-mark; the
+   logo is identity and the eye learns to pass over it. */
+.logo{
+  display:inline-flex;align-items:center;gap:10px;
   font-family:var(--display);font-weight:700;font-size:17px;
   letter-spacing:-0.03em;color:var(--text);text-decoration:none;
+  line-height:1;white-space:nowrap;
 }
-.mark span{color:var(--cyan-text)}
+.logo:hover{color:var(--text);text-decoration:none}
+.logo-mark{flex:none}
+.logo-stop{color:var(--cyan-text)}
+.logo-sm{gap:8px;font-size:15px}
 /* The single cyan attention-mark per viewport (§1 rule 1) is the hero CTA,
    so this nav link rests in --text and only warms on hover. */
 .nav-link{
@@ -362,7 +403,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
 
 <header class="nav">
   <div class="wrap nav-in">
-    <a class="mark" href="#top">duetale<span>.</span></a>
+    <a class="logo" href="#top" aria-label="Duetale — home"><svg class="logo-mark" width="22" height="22" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="1.5" y="1.5" width="19" height="19" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="11.5" y="11.5" width="19" height="19" rx="3" fill="var(--cyan)"/></svg><span class="logo-word">duetale<span class="logo-stop">.</span></span></a>
     <div class="nav-right">
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark theme">
         <span id="themeLabel">Dark</span>
@@ -646,7 +687,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
   <div class="wrap">
     <div class="foot">
       <div>
-        <div class="mark" style="font-size:15px">duetale<span>.</span></div>
+        <span class="logo logo-sm" role="img" aria-label="Duetale"><svg class="logo-mark" width="19" height="19" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="1.5" y="1.5" width="19" height="19" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="11.5" y="11.5" width="19" height="19" rx="3" fill="var(--cyan)"/></svg><span class="logo-word">duetale<span class="logo-stop">.</span></span></span>
         <!-- SWAP ON RC CERTIFICATE: replace the line below with
              "Duetale Limited · RC [number]" once the certificate lands. -->
         <div style="margin-top:8px">Duetale Limited </div>

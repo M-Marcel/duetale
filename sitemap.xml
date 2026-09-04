@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  One entry, because Duetale has one public page. The in-page anchors
+  (#review, #waitlist) are deliberately absent: a fragment is not a URL a
+  crawler indexes separately, and listing them would claim more surface than
+  exists.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://duetale.com/</loc>
+    <lastmod>2026-09-04</lastmod>
+  </url>
+</urlset>

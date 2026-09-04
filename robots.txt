@@ -1,0 +1,5 @@
+# Duetale — one public page, and it is meant to be found.
+User-agent: *
+Allow: /
+
+Sitemap: https://duetale.com/sitemap.xml
