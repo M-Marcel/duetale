@@ -56,18 +56,28 @@
      nothing loads at all: a placeholder id shipped live would fetch a tag for
      a property that does not exist, on every visit, and report nothing.
 
-     Consent Mode defaults to denied, so the tag runs without cookies and
-     without local storage. There is then nothing stored on the visitor's
-     device to ask permission for, which is what keeps a company applying for
-     government accreditation clear of the NDPA without a consent banner. It
-     is also the seam a real banner plugs into later — one
-     gtag('consent', 'update', {...}) call on accept, no other change. The
-     cost is that returning visitors cannot be recognised, so sessions are
-     modelled rather than counted; that is the trade being made on purpose.
+     Consent Mode is split rather than denied outright: analytics storage is
+     granted, every advertising signal is denied. That is the trade in full —
+     one first-party cookie, visits that can actually be counted, and nothing
+     that can be joined to an advertising profile.
 
-     Google Signals and ad personalisation are off. This page carries a form
+     Denying analytics_storage as well was the first attempt and it was
+     wrong. Google's behavioural modelling fills gaps in consented traffic;
+     it does not build a picture from nothing. A property where every visitor
+     is denied receives cookieless pings that populate no report at all, so
+     those defaults with no banner to lift them were not a cautious setting,
+     they were an off switch. Verified live: hits arrived carrying gcs=G100
+     and Realtime stayed empty.
+
+     The seam for a banner is unchanged. If prior consent is ever required
+     here, set analytics_storage back to 'denied' and have the accept button
+     call gtag('consent', 'update', { analytics_storage: 'granted' }). The
+     rest of this block stays exactly as it is.
+
+     Google Signals and ad personalisation stay off. This page carries a form
      that collects an email address under a promise it is never shared, and
-     the analytics on the same page should not be quietly undoing that. -->
+     the analytics on the same page must not quietly undo that. The footer
+     says plainly that the cookie is set. -->
 <script>
 (function () {
   var GA_MEASUREMENT_ID = 'G-HRB6SP6P2L';
@@ -83,14 +93,17 @@
     ad_storage: 'denied',
     ad_user_data: 'denied',
     ad_personalization: 'denied',
-    analytics_storage: 'denied'
+    analytics_storage: 'granted'
   });
   gtag('set', 'ads_data_redaction', true);
 
   gtag('js', new Date());
   gtag('config', GA_MEASUREMENT_ID, {
     allow_google_signals: false,
-    allow_ad_personalization_signals: false
+    allow_ad_personalization_signals: false,
+    // The cookie holds a visit count and nothing else, but it should still
+    // refuse to travel over plain HTTP or to another site's request.
+    cookie_flags: 'SameSite=Lax;Secure'
   });
 
   // Appended rather than written inline so it cannot block the parser. A tag
@@ -760,7 +773,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 44px}
       </div>
       <div class="r">© 2026</div>
     </div>
-    <p class="legal">Duetale provides software and coordination services. It is not a licensed tax practitioner and does not file returns or hold client funds. Filing is carried out by licensed CITN practitioners. Nothing on this page is tax, legal, or financial advice.</p>
+    <p class="legal">Duetale provides software and coordination services. It is not a licensed tax practitioner and does not file returns or hold client funds. Filing is carried out by licensed CITN practitioners. Nothing on this page is tax, legal, or financial advice. This page uses Google Analytics to count visits. It sets one first-party cookie, collects no advertising data, and is never joined to an advertising profile.</p>
   </div>
 </footer>
 
