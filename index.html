@@ -49,6 +49,61 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<!-- Google Analytics 4.
+
+     Paste the property's measurement ID below. It looks like G-XXXXXXXXXX and
+     comes from Admin -> Data streams in the GA property. While it is blank
+     nothing loads at all: a placeholder id shipped live would fetch a tag for
+     a property that does not exist, on every visit, and report nothing.
+
+     Consent Mode defaults to denied, so the tag runs without cookies and
+     without local storage. There is then nothing stored on the visitor's
+     device to ask permission for, which is what keeps a company applying for
+     government accreditation clear of the NDPA without a consent banner. It
+     is also the seam a real banner plugs into later — one
+     gtag('consent', 'update', {...}) call on accept, no other change. The
+     cost is that returning visitors cannot be recognised, so sessions are
+     modelled rather than counted; that is the trade being made on purpose.
+
+     Google Signals and ad personalisation are off. This page carries a form
+     that collects an email address under a promise it is never shared, and
+     the analytics on the same page should not be quietly undoing that. -->
+<script>
+(function () {
+  var GA_MEASUREMENT_ID = 'G-HRB6SP6P2L';
+  if (GA_MEASUREMENT_ID === '') return;
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  // Before the config call. Consent set afterwards arrives too late for the
+  // first pageview, which is the only one most visitors send.
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied'
+  });
+  gtag('set', 'ads_data_redaction', true);
+
+  gtag('js', new Date());
+  gtag('config', GA_MEASUREMENT_ID, {
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false
+  });
+
+  // Appended rather than written inline so it cannot block the parser. A tag
+  // that is blocked, throttled or unreachable leaves the page exactly as it
+  // is — analytics failing is not the site failing, so there is deliberately
+  // nothing here that reacts to it.
+  var tag = document.createElement('script');
+  tag.async = true;
+  tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+  document.head.appendChild(tag);
+})();
+</script>
+
 <style>
 /* ============================================================
    Duetale — Design System v2.0
