@@ -17,26 +17,25 @@ Everything under `brand/` is vendored from `duetale_brand_package/` in the
 application repository, which is canonical. Do not edit these files here —
 change them there and re-vendor, or the two surfaces drift.
 
-Two things differ deliberately from the supplied package, both for reasons
-that only apply to a live site:
+One thing differs deliberately from the supplied package: the
+`brand/icons/site.webmanifest` colours are the light ground `#FFFFFF`, because
+light is the site's default and a dark manifest flashes the wrong colour when
+the page is launched from a home screen. `brand/fonts/` carries the self-hosted
+Host Grotesk and Fragment Mono files (SIL OFL), copied from the Go app.
 
-- `brand/icons/favicon.svg` carries a `prefers-color-scheme: dark` rule. The
-  supplied file strokes `#0E1320`, which is invisible against a dark browser
-  tab, and one `<link>` cannot carry two files. The dark value is the
-  package's own `-reverse` colour, not a new one.
-- `brand/icons/site.webmanifest` uses the light ground `#F2F4F8`. The supplied
-  file is dark; light is the site's default, and a dark manifest flashes the
-  wrong colour when the page is launched from a home screen.
+The brand is v3.0, "The Signed Statement" (10 October 2026). The wordmark is
+`duetale`: Host Grotesk 600, −0.035em, always lowercase, no full stop, beside the
+signed-d mark on the accent plate. It is drawn inline in `index.html`, painted
+from `--accent` and `--on-accent`, so it follows the theme toggle with no second
+asset. Never recolour it, rotate it, crowd it, or set it on a photograph.
 
-The wordmark is `duetale.` — JetBrains Mono 700, always lowercase, the full
-stop always present and always in `--cyan-text`. It is drawn inline in
-`index.html` so the outline plate follows `currentColor` and the theme toggle
-needs no second asset. Never recolour it, rotate it, soften its corners, or
-set it on a photograph.
+The wording is shared with the Go app's landing page (`duetale-go`), which
+takes its copy from this page: change a sentence here and change it there.
 
 ## Tokens
 
-The two `:root` blocks in `index.html` mirror `../tokens.css` exactly, because
+The `:root` blocks in `index.html` mirror
+`../duetale-go/internal/web/static/tokens.css` exactly, because
 the page inlines its styles rather than importing them. They are not kept in
 sync by good intentions:
 

@@ -1,17 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-  <!--
-    The mark, at the 3-unit stroke §3 specifies below 16px so the two plates
-    stay distinguishable.
-
-    The supplied file strokes #0E1320 flat, which disappears against a dark
-    browser tab. A favicon cannot ship two files under one <link>, so the
-    -reverse colour the package already specifies for dark grounds is applied
-    by media query here. Not a recolour: both values are brand --text.
-  -->
-  <style>
-    .plate { stroke: #0E1320; }
-    @media (prefers-color-scheme: dark) { .plate { stroke: #ECEFF7; } }
-  </style>
-  <rect class="plate" x="1.75" y="1.75" width="18.5" height="18.5" rx="3" fill="none" stroke-width="3"/>
-  <rect x="11.5" y="11.5" width="19" height="19" rx="3" fill="#3FC8D4"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Duetale"><title>Duetale</title><g transform="translate(0.00 0.00) scale(1.0000)"><rect width="32" height="32" rx="8" fill="#3346E8"/><circle cx="13.75" cy="18.25" r="5.25" fill="none" stroke="#FFFFFF" stroke-width="3"/><path d="M19 7.5V20.75c0 2.6 1.5 4 4.25 4" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/></g></svg>
